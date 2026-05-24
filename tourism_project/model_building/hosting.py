@@ -44,7 +44,7 @@ create_repo(
 try:
     api.add_space_variable(
         repo_id=SPACE_REPO_ID,
-        name="HF_USERNAME",
+        key="HF_USERNAME",
         value=HF_USERNAME,
         description="Hugging Face username to build the model repo id at runtime.",
     )
@@ -55,7 +55,7 @@ except HfHubHTTPError as e:
 try:
     api.add_space_secret(
         repo_id=SPACE_REPO_ID,
-        name="HF_TOKEN",
+        key="HF_TOKEN",
         value=HF_TOKEN,
         description="Hugging Face token (write scope) to allow the app to pull model and encoders from the HF Model Hub at runtime.",
     )
