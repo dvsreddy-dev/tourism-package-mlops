@@ -30,6 +30,16 @@ def load_artifacts():
 
 model, label_encoders = load_artifacts()
 
+# Training-time feature order (sklearn 1.5+ checks feature_names_in_ at predit time).
+# Fall back to a hardcoded list only if hte attribute is missing.
+FEATURE_ORDER = list(getattr(model, "feature_names_in_", [
+    "Age", "TypeofContact", "CityTier", "DurationOfPitch", "Occupation",
+    "Gender", "NumberOfPersonVisiting", "NumberOfFollowups", "ProductPitched", 
+    "PreferredPropertyStar", "MaritalStatus", "NumberOfTrips", "Passport", 
+    "PitchSatisfactionScore", "OwnCar", "NumberOfChildrenVisiting", 
+    "Designation", "MonthlyIncome"
+]))
+
 # ---- UI ----
 st.set_page_config(page_title="Tourism Package Predictor", page_icon="✈️", layout="centered")
 st.title("✈️ Wellness Tourism Package Predictor")
@@ -67,37 +77,39 @@ def encode_input(value, column_name):
     return 0
 
 # Get inputs and save them into a dataframe
-input_data = pd.DataFrame({
-    "Age": [age],
-    "TypeofContact": [encode_input(type_of_contact, "TypeofContact")],
-    "CityTier": [city_tier],
-    "DurationOfPitch": [duration_of_pitch],
-    "Occupation": [encode_input(occupation, "Occupation")],
-    "Gender": [encode_input(gender, "Gender")],
-    "NumberOfPersonVisiting": [num_persons_visiting],
-    "ProductPitched": [encode_input(product_pitched, "ProductPitched")],
-    "PreferredPropertyStar": [preferred_property_star],
-    "MaritalStatus": [encode_input(marital_status, "MaritalStatus")],
-    "NumberOfTrips": [num_trips],
-    "Passport": [passport],
-    "PitchSatisfactionScore": [pitch_satisfaction_score],
-    "OwnCar": [own_car],
-    "NumberOfChildrenVisiting": [num_children_visiting],
-    "Designation": [encode_input(designation, "Designation")],
-    "MonthlyIncome": [monthly_income]
-})
+raw = {
+    "Age": age,
+    "TypeofContact": encode_input(type_of_contact, "TypeofContact"),
+    "CityTier": city_tier,
+    "DurationOfPitch": duration_of_pitch,
+    "Occupation": encode_input(occupation, "Occupation"),
+    "Gender": encode_input(gender, "Gender"),
+    "NumberOfPersonVisiting": num_persons_visiting,
+    "NumberOfFollowups": num_followups,
+    "ProductPitched": encode_input(product_pitched, "ProductPitched"),
+    "PreferredPropertyStar": preferred_property_star,
+    "MaritalStatus": encode_input(marital_status, "MaritalStatus"),
+    "NumberOfTrips": num_trips,
+    "Passport": passport,
+    "PitchSatisfactionScore": pitch_satisfaction_score,
+    "OwnCar": own_car,
+    "NumberOfChildrenVisiting": num_children_visiting,
+    "Designation": encode_input(designation, "Designation"),
+    "MonthlyIncome": monthly_income
+}
+input_data = pd.DataFrame([{col: raw[col] for col in FEATURE_ORDER}])
 
 st.markdown("### Prediction Result")
-if st.button(":mag:Predict"):
+if st.button("🔍 Predict"):
     prediction = model.predict(input_data)[0]
     probability = model.predict_proba(input_data)[0]
 
     if prediction == 1:
-        st.success(" The customer is **likely to purchase** the Wellness Tourism Package.")
+        st.success("✅ The customer is **likely to purchase** the Wellness Tourism Package.")
     else:
-        st.warning(" The customer is **unlikely to purchase** the package.")
+        st.warning("❌ The customer is **unlikely to purchase** the package.")
 
-    st.metric("Purchase Probabilty", f"{probability[1]*100:.1f}%")
+    st.metric("Purchase Probability", f"{probability[1]*100:.1f}%")
 
     st.markdown("---")
     st.markdown("#### Input Summary")
