@@ -124,7 +124,7 @@ print(f"\nBest Model: {best_overall['name']} | F1: {best_overall['f1']:.4f}")
 
 # ---- Step 6: Register best model in Hugging Face Model Hub ----
 api = HfApi(token=HF_TOKEN)
-create_repo(repo_id=MODEL_REPO_ID, repo_type="model", exist_ok:True, token=HF_TOKEN)
+create_repo(repo_id=MODEL_REPO_ID, repo_type="model", exist_ok=True, token=HF_TOKEN)
 
 api.upload_file(
     path_or_fileobj=model_path,

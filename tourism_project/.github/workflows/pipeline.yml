@@ -10,9 +10,9 @@ jobs:
   register-dataset:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
         with:
           python-version: '3.14'
           cache: 'pip'
@@ -31,9 +31,9 @@ jobs:
     needs: register-dataset
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
         with:
           python-version: '3.14'
           cache: 'pip'
@@ -53,9 +53,9 @@ jobs:
     needs: data-prep
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
         with:
           python-version: '3.14'
           cache: 'pip'
@@ -79,9 +79,9 @@ jobs:
     runs-on: ubuntu-latest
     needs: [model-traning, data-prep, register-dataset]
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
         with:
           python-version: '3.14'
           cache: 'pip'
