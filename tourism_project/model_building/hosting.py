@@ -42,7 +42,7 @@ create_repo(
 # ---- Inject HF_USERNAME and HF_TOKEN as Space variables and secrets ----
 # The running container needs these so app.py can call hf_hub_download to pull the model and encoders at runtime
 try:
-    api.create_space_variable(
+    api.add_space_variable(
         repo_id=SPACE_REPO_ID,
         name="HF_USERNAME",
         value=HF_USERNAME,
@@ -53,7 +53,7 @@ except HfHubHTTPError as e:
     print(f"Error setting HF_USERNAME variable: {e}")
 
 try:
-    api.create_space_secret(
+    api.add_space_secret(
         repo_id=SPACE_REPO_ID,
         name="HF_TOKEN",
         value=HF_TOKEN,
