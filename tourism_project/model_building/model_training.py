@@ -28,15 +28,21 @@ DATASET_REPO_ID = f"{HF_USERNAME}/tourism-package-dataset"
 MODEL_REPO_ID = f"{HF_USERNAME}/tourism-package-model"
 
 # ---- Setp 1: Load train/test data from Hugging Face ----
-def _hf_load(filename):
-    path = hf_hub_download(
+def _hf_path(filename):
+    return hf_hub_download(
+        """Download a file from the HF dataset repo and return a local path to it. 
+        This is used to load the processed train/test datasets for model training."""
         repo_id=DATASET_REPO_ID,
         filename=f"processed/{filename}",
         repo_type="dataset",
         token=HF_TOKEN
     )
+def _hf_load(filename):
+    """Load a processed train/test dataset file from Hugging Face and return a cleaned DataFrame."""
+    path = _hf_path(filename)
     df = pd.read_csv(path)
-    return df.loc[:, ~df.columns.str.contains("^unnamed")]
+    return df.loc[:, ~df.columns.str.contains("^Unnamed")]
+
 
 X_train = _hf_load("X_train.csv")
 X_test = _hf_load("X_test.csv")
@@ -45,12 +51,7 @@ y_test = _hf_load("y_test.csv")
 
 # Also pull label_encoders.pkl from the HF data repo. 
 # We will need these encoders later during deployment to transform incoming data in the same way as training data.
-encoders_path = hf_hub_download(
-    repo_id=DATASET_REPO_ID,
-    filename="processed/label_encoders.pkl",
-    repo_type="dataset",
-    token=HF_TOKEN
-)
+encoders_path = _hf_path("label_encoders.pkl")
 
 # ---- Step 2: Configure MLFlow ----
 mlflow.set_tracking_uri("http://localhost:5000")
