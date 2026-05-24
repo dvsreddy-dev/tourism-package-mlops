@@ -6,6 +6,7 @@ Data Preparation Script
 3. Split into train / test data sets and save locally.
 4. Upload processed train / test sets back to the Hugging Face dataset space.
 """
+import os
 import pandas as pd
 import numpy as np
 from sklearn.model_selection import train_test_split
