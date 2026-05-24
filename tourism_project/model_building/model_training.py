@@ -66,7 +66,7 @@ search_space = {
     },
 }
 
-best_overall = {"name": None, "model": None, "f1": 0.0, "params", None}
+best_overall = {"name": None, "model": None, "f1": 0.0, "params": None}
 
 # ---- Step 4: Tune, log, and evaluate each model ----
 for name, cfg in search_space.items():
