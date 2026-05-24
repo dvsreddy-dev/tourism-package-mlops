@@ -19,4 +19,4 @@ USER user
 
 # Hugging Face Spaces probes port 7860 by default. Bind Streamlit to this port.
 EXPOSE 7860
-CMD ["streamlit", "run", "app.py", "--server.port=7860", "--server.address=0.0.0.0", "--server.headless=true", "--server.enableCORS=false" "--server.enableXsrfProtection=false"]
+CMD ["streamlit", "run", "app.py", "--server.port=7860", "--server.address=0.0.0.0", "--server.enableXsrfProtection=false"]
