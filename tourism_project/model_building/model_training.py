@@ -35,7 +35,8 @@ def _hf_load(filename):
         repo_type="dataset",
         token=HF_TOKEN
     )
-    return pd.read_csv(path)
+    df = pd.read_csv(path)
+    return df.loc[:, ~df.columns.str.contains("^unnamed")]
 
 X_train = _hf_load("X_train.csv")
 X_test = _hf_load("X_test.csv")
