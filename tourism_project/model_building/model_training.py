@@ -132,7 +132,7 @@ api.upload_file(
     repo_id=MODEL_REPO_ID,
     repo_type="model",
     token=HF_TOKEN,
-    commit_messsage=f"Register best model: {best_overall['name']}, F1={best_overall['f1']:.4f}"
+    commit_message=f"Register best model: {best_overall['name']}, F1={best_overall['f1']:.4f}"
 )
 
 # Also push the label encoders alongside the model so the deployment can use them
@@ -142,7 +142,7 @@ api.upload_file(
     repo_id=MODEL_REPO_ID,
     repo_type="model",
     token=HF_TOKEN,
-    commit_messsage="Added label encoders"
+    commit_message="Added label encoders"
 )
 
 print(f"Model registerd at: https://huggingface.co/{MODEL_REPO_ID}")

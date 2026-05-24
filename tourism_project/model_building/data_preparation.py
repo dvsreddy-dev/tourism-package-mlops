@@ -72,7 +72,7 @@ for fname in ["X_train.csv", "X_test.csv", "y_train.csv", "y_test.csv", "label_e
         repo_id=DATASET_REPO_ID,
         repo_type="dataset",
         token=HF_TOKEN,
-        commit_messsage=f"Upload processed {fname}"
+        commit_message=f"Upload processed {fname}"
     )
 
 print(f"Processsed datasets uploaded to: https://huggingface.co/datasets/{DATASET_REPO_ID}")
