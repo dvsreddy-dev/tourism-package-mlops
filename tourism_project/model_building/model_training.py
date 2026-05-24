@@ -44,7 +44,12 @@ y_test = _hf_load("y_test.csv")
 
 # Also pull label_encoders.pkl from the HF data repo. 
 # We will need these encoders later during deployment to transform incoming data in the same way as training data.
-encoders_path = _hf_load("label_encoders.pkl")
+encoders_path = hf_hub_download(
+    repo_id=DATASET_REPO_ID,
+    filename="processed/label_encoders.pkl",
+    repo_type="dataset",
+    token=HF_TOKEN
+)
 
 # ---- Step 2: Configure MLFlow ----
 mlflow.set_tracking_uri("http://localhost:5000")
