@@ -109,7 +109,7 @@ if st.button("🔍 Predict"):
     else:
         st.warning("❌ The customer is **unlikely to purchase** the package.")
 
-    st.metric("Purchase Probability", f"{probability[1]*100:.1f}%")
+    st.metric("Purchase Probabilty", f"{probability[1]*100:.1f}%")
 
     st.markdown("---")
     st.markdown("#### Input Summary")
