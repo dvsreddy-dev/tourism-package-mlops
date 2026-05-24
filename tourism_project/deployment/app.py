@@ -50,7 +50,7 @@ st.markdown("---")
 # Sidebar: customer details
 st.sidebar.header("Customer Details")
 age = st.sidebar.slider("Age", 18, 70, 35)
-type_of_contact = st.sidebar.selectbox("Type of Contact", ["Self Inquiry", "Company Invited"])
+type_of_contact = st.sidebar.selectbox("Type of Contact", ["Self Enquiry", "Company Invited"])
 city_tier = st.sidebar.selectbox("City Tier", [1, 2, 3])
 occupation = st.sidebar.selectbox("Occupation", ["Salaried", "Free Lancer", "Small Business", "Large Buisiness"])
 gender = st.sidebar.selectbox("Gender", ["Male", "Female"])
