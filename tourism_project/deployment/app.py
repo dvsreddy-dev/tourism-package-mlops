@@ -32,13 +32,14 @@ model, label_encoders = load_artifacts()
 
 # Training-time feature order (sklearn 1.5+ checks feature_names_in_ at predit time).
 # Fall back to a hardcoded list only if hte attribute is missing.
-FEATURE_ORDER = list(getattr(model, "feature_names_in_", [
+DEFAULT_FEATURES =  [
     "Age", "TypeofContact", "CityTier", "DurationOfPitch", "Occupation",
     "Gender", "NumberOfPersonVisiting", "NumberOfFollowups", "ProductPitched", 
     "PreferredPropertyStar", "MaritalStatus", "NumberOfTrips", "Passport", 
     "PitchSatisfactionScore", "OwnCar", "NumberOfChildrenVisiting", 
     "Designation", "MonthlyIncome"
-]))
+]
+FEATURE_ORDER = list(getattr(model, "feature_names_in_", DEFAULT_FEATURES))
 
 # ---- UI ----
 st.set_page_config(page_title="Tourism Package Predictor", page_icon="✈️", layout="centered")
@@ -73,7 +74,9 @@ duration_of_pitch = st.sidebar.slider("Duration of Pitch (minutes)", 5, 60, 15)
 def encode_input(value, column_name):
     le = label_encoders[column_name]
     if value in le.classes_:
-        return le.transform([value])[0]
+        return int(le.transform([value])[0])
+    st.warning(f"Warning: '{value}' not seen in training for column '{column_name}'. Encoding as 0."
+               f"Known values: {list(le.classes_)}. Failing back to 0 may lead to inaccurate predictions.")
     return 0
 
 # Get inputs and save them into a dataframe
@@ -98,9 +101,19 @@ raw = {
     "MonthlyIncome": monthly_income
 }
 
+aligned_input = {col: raw[col] for col in FEATURE_ORDER}   
+input_data = pd.DataFrame([aligned_input], columns=FEATURE_ORDER)
+
 st.markdown("### Prediction Result")
 if st.button("🔍 Predict"):
-    input_data = pd.DataFrame([{col: raw[col] for col in FEATURE_ORDER}])
+    st.markdown("### Input sent to model")
+    st.write("The following input data was sent to the model for prediction:")
+    st.dataframe(input_data)
+    expected_columns = list(getattr(model, "feature_names_in_", []))
+    if expected_columns and list(input_data.columns) != expected_columns:
+        st.error(f"Error: Model expects features in the following order: {expected_columns}. "
+                 f"Current input order: {list(input_data.columns)}. Please check the input data formatting.")
+
     prediction = model.predict(input_data)[0]
     probability = model.predict_proba(input_data)[0]
 
