@@ -42,6 +42,10 @@ X_test = _hf_load("X_test.csv")
 y_train = _hf_load("y_train.csv")
 y_test = _hf_load("y_test.csv")
 
+# Also pull label_encoders.pkl from the HF data repo. 
+# We will need these encoders later during deployment to transform incoming data in the same way as training data.
+encoders_path = _hf_load("label_encoders.pkl")
+
 # ---- Step 2: Configure MLFlow ----
 mlflow.set_tracking_uri("http://localhost:5000")
 mlflow.set_experiment("Tourism_Package_Prediction")
@@ -137,7 +141,7 @@ api.upload_file(
 
 # Also push the label encoders alongside the model so the deployment can use them
 api.upload_file(
-    path_or_fileobj="tourism_project/model_building/processed_data/label_encoders.pkl",
+    path_or_fileobj=encoders_path,
     path_in_repo=f"label_encoders.pkl",
     repo_id=MODEL_REPO_ID,
     repo_type="model",
