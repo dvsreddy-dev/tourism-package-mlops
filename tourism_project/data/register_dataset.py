@@ -26,7 +26,7 @@ api.upload_file(
     path_in_repo="tourism.csv",
     repo_id=DATASET_REPO_ID,
     repo_type="dataset",
-    token="HF_TOKEN",
+    token=HF_TOKEN,
     commit_message="Register raw tourism dataset"
 )
 
