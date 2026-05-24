@@ -59,7 +59,7 @@ search_space = {
     "GradientBoosting": {
         "estimator": GradientBoostingClassifier(random_state=42),
         "params": {
-            "n_extimators": [100, 200],
+            "n_estimators": [100, 200],
             "max_depth": [3, 5],
             "learning_rate": [0.05, 0.1],
         },
