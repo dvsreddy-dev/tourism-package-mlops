@@ -99,7 +99,7 @@ for name, cfg in search_space.items():
         print(f"\n--- {name} ---")
         print(f"Best Params: {grid.best_params_}")
 
-        for k, v in metrics.item():
+        for k, v in metrics.items():
             print(f".   {k}: {v:.4f}")
         print(classification_report(y_test, y_pred))
 
