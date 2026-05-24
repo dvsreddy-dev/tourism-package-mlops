@@ -53,7 +53,7 @@ num_children_visiting = st.sidebar.slider("Number of Children Visiting", 0, 3, 0
 designation = st.sidebar.selectbox("Designation", ["Executive", "Manager", "Senior Manager", "AVP", "VP"])
 monthly_income = st.sidebar.number_input("Monthly Income", min_value=5000, max_value=100000, value=25000)
 
-st.didebar.header("Interaction Details")
+st.sidebar.header("Interaction Details")
 pitch_satisfaction_score = st.sidebar.slider("Pitch Satisfaction Score", 1, 5 ,3)
 product_pitched = st.sidebar.selectbox("Product Pitched", ["Basic", "Standard", "Deluxe", "Super Deluxe", "King"])
 num_followups = st.sidebar.slider("Number of Follow-Ups", 1, 6, 3)
