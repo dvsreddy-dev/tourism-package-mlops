@@ -77,29 +77,30 @@ def encode_input(value, column_name):
     return 0
 
 # Get inputs and save them into a dataframe
-input_data = pd.DataFrame({
-    "Age": [age],
-    "TypeofContact": [encode_input(type_of_contact, "TypeofContact")],
-    "CityTier": [city_tier],
-    "DurationOfPitch": [duration_of_pitch],
-    "Occupation": [encode_input(occupation, "Occupation")],
-    "Gender": [encode_input(gender, "Gender")],
-    "NumberOfPersonVisiting": [num_persons_visiting],
-    "NumberOfFollowups": [num_followups],
-    "ProductPitched": [encode_input(product_pitched, "ProductPitched")],
-    "PreferredPropertyStar": [preferred_property_star],
-    "MaritalStatus": [encode_input(marital_status, "MaritalStatus")],
-    "NumberOfTrips": [num_trips],
-    "Passport": [passport],
-    "PitchSatisfactionScore": [pitch_satisfaction_score],
-    "OwnCar": [own_car],
-    "NumberOfChildrenVisiting": [num_children_visiting],
-    "Designation": [encode_input(designation, "Designation")],
-    "MonthlyIncome": [monthly_income]
-})
+raw = {
+    "Age": age,
+    "TypeofContact": encode_input(type_of_contact, "TypeofContact"),
+    "CityTier": city_tier,
+    "DurationOfPitch": duration_of_pitch,
+    "Occupation": encode_input(occupation, "Occupation"),
+    "Gender": encode_input(gender, "Gender"),
+    "NumberOfPersonVisiting": num_persons_visiting,
+    "NumberOfFollowups": num_followups,
+    "ProductPitched": encode_input(product_pitched, "ProductPitched"),
+    "PreferredPropertyStar": preferred_property_star,
+    "MaritalStatus": encode_input(marital_status, "MaritalStatus"),
+    "NumberOfTrips": num_trips,
+    "Passport": passport,
+    "PitchSatisfactionScore": pitch_satisfaction_score,
+    "OwnCar": own_car,
+    "NumberOfChildrenVisiting": num_children_visiting,
+    "Designation": encode_input(designation, "Designation"),
+    "MonthlyIncome": monthly_income
+}
 
 st.markdown("### Prediction Result")
 if st.button("🔍 Predict"):
+    input_data = pd.DataFrame([{col: raw[col] for col in FEATURE_ORDER}])
     prediction = model.predict(input_data)[0]
     probability = model.predict_proba(input_data)[0]
 
