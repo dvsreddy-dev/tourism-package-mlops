@@ -22,6 +22,7 @@ MODEL_REPO_ID = f"{HF_USERNAME}/tourism-package-model"
 
 # Create the HF Space (Streamlit SDK)
 api = HfApi(token=HF_TOKEN)
+api.delete_repo(repo_id=SPACE_REPO_ID, repo_type="space", token=HF_TOKEN)  # Delete if already exists to ensure a clean slate
 create_repo(
     repo_id=SPACE_REPO_ID, 
     repo_type="space", 
