@@ -115,7 +115,7 @@ joblib.dump(best_overall["model"], model_path)
 
 with mlflow.start_run(run_name=f"Best_Model_{best_overall['name']}"):
     mlflow.log_params(best_overall["params"])
-    mlflow.log_metrics("best_f1_score", best_overall["f1"])
+    mlflow.log_metric("best_f1_score", best_overall["f1"])
     mlflow.sklearn.log_model(
         best_overall["model"], "best_model", registered_model_name="TourismPackagePredictor"
     )
