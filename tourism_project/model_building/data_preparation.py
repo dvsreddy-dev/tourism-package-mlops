@@ -54,7 +54,7 @@ X_train, X_test, y_train, y_test = train_test_split(
     X, y, test_size=0.2, random_state=442, stratify=y
 )
 
-os.make_dirs("tourism_project/model_building/processed_data", exist_ok=True)
+os.makedirs("tourism_project/model_building/processed_data", exist_ok=True)
 X_train.to_csv("tourism_project/model_building/processed_data/X_train.csv", index=False)
 X_test.to_csv("tourism_project/model_building/processed_data/X_test.csv", index=False)
 y_train.to_csv("tourism_project/model_building/processed_data/y_train.csv", index=False)
