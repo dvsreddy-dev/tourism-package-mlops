@@ -29,8 +29,8 @@ MODEL_REPO_ID = f"{HF_USERNAME}/tourism-package-model"
 
 # ---- Setp 1: Load train/test data from Hugging Face ----
 def _hf_path(filename):
+    """Download a file from the HF dataset repo and return its local path."""
     return hf_hub_download(
-        """Download a file from the HF dataset repo and return its local path."""
         repo_id=DATASET_REPO_ID,
         filename=f"processed/{filename}",
         repo_type="dataset",
