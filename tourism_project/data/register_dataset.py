@@ -11,7 +11,7 @@ import os
 from huggingface_hub import HfApi, create_repo
 
 # Configuration
-HF_USERNAME = os.environ.get("HF_TOKEN", "your-hf-username")
+HF_USERNAME = os.environ.get("HF_USERNAME", "your-hf-username")
 HF_TOKEN = os.environ.get("HF_TOKEN")
 DATASET_REPO_NAME = "tourism-package-dataset"
 DATASET_REPO_ID = f"{HF_USERNAME}/{DATASET_REPO_NAME}"
